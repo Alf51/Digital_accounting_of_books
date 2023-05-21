@@ -20,8 +20,7 @@ public class PersonDAO {
 
     //Список всех людей
     public List<Person> index() {
-        jdbcTemplate.query("SELECT * From person", new PersonMapper());
-        return null;
+        return jdbcTemplate.query("SELECT * From person", new PersonMapper());
     }
 
     //Возвращает конкретного человека

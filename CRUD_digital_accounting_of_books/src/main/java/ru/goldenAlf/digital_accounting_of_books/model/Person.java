@@ -1,23 +1,21 @@
 package ru.goldenAlf.digital_accounting_of_books.model;
 
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Person {
     private int id;
 
     @NotEmpty(message = "Полное имя не может быть пустым")
     private String fullName;
-    @DateTimeFormat(pattern = "\\d{4}-\\d{2}-\\d{2}")
-    private LocalDateTime birthday;
+    //@DateTimeFormat(pattern = "\\d{4}-\\d{2}-\\d{2}")
+    private LocalDate birthday;
 
     public Person() {
     }
 
-    public Person(int id, String fullName, LocalDateTime birthday) {
+    public Person(int id, String fullName, LocalDate birthday) {
         this.id = id;
         this.fullName = fullName;
         this.birthday = birthday;
@@ -39,11 +37,11 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public LocalDateTime getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 }
