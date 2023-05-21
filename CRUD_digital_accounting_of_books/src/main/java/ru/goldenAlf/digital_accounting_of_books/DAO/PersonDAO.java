@@ -31,8 +31,10 @@ public class PersonDAO {
                 id).stream().findAny();
     }
 
-    public void save(int id, Person personUpdate) {
-        jdbcTemplate.query("INSERT INTO person(id, fullname, birthday) VALUES (?, ?, ?)", new PersonMapper());
+    public void save(Person person) {
+        jdbcTemplate.query("INSERT INTO person(fullname, birthday) VALUES (?, ?)", new PersonMapper(),
+                person.getFullName(),
+                person.getBirthday());
     }
 
     public void delete(int id) {
