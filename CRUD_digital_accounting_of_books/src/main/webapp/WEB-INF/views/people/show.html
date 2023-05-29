@@ -12,6 +12,8 @@
 <a href="/people">На главную страницу</a>
 <br>
 <br>
+<a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
+<br>
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="удалить пользователя">
 </form>
