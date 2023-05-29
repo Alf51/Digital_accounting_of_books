@@ -10,13 +10,16 @@
     <label for="fullName">введите имя нового пользователя</label>
     <input type="text" th:field="*{fullName}" id="fullName"/>
     <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name error</div>
-    < <br/>
+    <br/>
     <label for="birthday">Введите возраст нового пользователя</label>
     <input type="text" th:field="*{birthday}" id="birthday"/>
     <div style="color:red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">Age error</div>
     <br/>
     <hr/>
     <input type="submit" value="создать"/>
+
+    <br>
+    <a href="/people">На главную страницу</a>
 </form>
 
 </body>
