@@ -31,17 +31,17 @@ public class PersonDAO {
     }
 
     public void save(Person person) {
-        jdbcTemplate.query("INSERT INTO person(fullname, birthday) VALUES (?, ?)", new PersonMapper(),
+        jdbcTemplate.update("INSERT INTO person(fullname, birthday) VALUES (?, ?)",
                 person.getFullName(),
                 person.getBirthday());
     }
 
     public void delete(int id) {
-        jdbcTemplate.query("DELETE FROM person WHERE id=?", new PersonMapper(), id);
+        jdbcTemplate.update("DELETE FROM person WHERE id=?", id);
     }
 
     public void update(int id, Person personUpdate) {
-        jdbcTemplate.query("UPDATE person SET fullname=?, birthday=? WHERE id=?", new PersonMapper(),
+        jdbcTemplate.update("UPDATE person SET fullname=?, birthday=? WHERE id=?",
                 personUpdate.getFullName(),
                 personUpdate.getBirthday(),
                 id);
