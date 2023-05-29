@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
 
@@ -33,13 +30,27 @@ public class PeopleController {
         return "people/new";
     }
 
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        //показать конкретного пользователя
+        Person person = personDAO.show(id).orElse(new Person());
+        model.addAttribute("person", person);
+        return "people/show";
+    }
+
     @PostMapping
-    public String save (@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+    public String save(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             return "people/new";
         }
 
         personDAO.save(person);
+        return "redirect:/people";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        personDAO.delete(id);
         return "redirect:/people";
     }
 }
