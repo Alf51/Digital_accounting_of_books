@@ -5,7 +5,9 @@
     <title>Зарегистрировать нового пользователя</title>
 </head>
 <body>
-
+<a href="/people">На главную страницу</a>
+<br>
+<br>
 <form th:method="POST" th:action="@{/people}" th:object="${person}">
     <label for="fullName">введите имя нового пользователя</label>
     <input type="text" th:field="*{fullName}" id="fullName"/>
@@ -17,10 +19,6 @@
     <br/>
     <hr/>
     <input type="submit" value="создать"/>
-
-    <br>
-    <a href="/people">На главную страницу</a>
 </form>
-
 </body>
 </html>
