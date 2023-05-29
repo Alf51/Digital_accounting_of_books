@@ -32,8 +32,12 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
+        if(personDAO.show(id).isEmpty()) {
+            return "redirect:/people";
+        }
+
         //показать конкретного пользователя
-        Person person = personDAO.show(id).orElse(new Person());
+        Person person = personDAO.show(id).get();
         model.addAttribute("person", person);
         return "people/show";
     }
@@ -45,6 +49,29 @@ public class PeopleController {
         }
 
         personDAO.save(person);
+        return "redirect:/people";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable("id") int id, Model model) {
+        if(personDAO.show(id).isEmpty()) {
+            return "redirect:/people";
+        }
+        Person person = personDAO.show(id).get();
+        model.addAttribute("person", person);
+        return "people/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") @Valid Person person,
+                         @PathVariable("id") int id,
+                         BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "people/edit";
+        }
+
+        personDAO.update(id, person);
         return "redirect:/people";
     }
 
