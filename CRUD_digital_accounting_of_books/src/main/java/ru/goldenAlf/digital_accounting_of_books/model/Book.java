@@ -1,9 +1,8 @@
 package ru.goldenAlf.digital_accounting_of_books.model;
 
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Book {
     private int id;
@@ -12,13 +11,13 @@ public class Book {
     private String name;
 
     private String author;
-    @DateTimeFormat(pattern = "\\d{4}-\\d{2}-\\d{2}")
-    private LocalDateTime year;
+    //@DateTimeFormat(pattern = "dd.MM.yyyy")
+    private LocalDate year;
 
     public Book() {
     }
 
-    public Book(int id, String name, String author, LocalDateTime year) {
+    public Book(int id, String name, String author, LocalDate year) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -49,11 +48,11 @@ public class Book {
         this.author = author;
     }
 
-    public LocalDateTime getYear() {
+    public LocalDate getYear() {
         return year;
     }
 
-    public void setYear(LocalDateTime year) {
+    public void setYear(LocalDate year) {
         this.year = year;
     }
 }

@@ -9,6 +9,9 @@
 <div th:each="book : ${books}">
     <a th:text="${book.getName()}"></a>
 </div>
+<br>
+<a href="/people/">Все пользователи библиотеки</a>
+<a href="new/">Добавить книгу</a>
 
 </body>
 </html>

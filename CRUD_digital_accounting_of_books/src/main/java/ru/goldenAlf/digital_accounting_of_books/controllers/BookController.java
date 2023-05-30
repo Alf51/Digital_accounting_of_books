@@ -1,11 +1,14 @@
 package ru.goldenAlf.digital_accounting_of_books.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import ru.goldenAlf.digital_accounting_of_books.DAO.BookDAO;
+import ru.goldenAlf.digital_accounting_of_books.model.Book;
+import ru.goldenAlf.digital_accounting_of_books.model.Person;
 
 
 @Controller
@@ -22,5 +25,20 @@ public class BookController {
     public String index(Model model) {
         model.addAttribute("books", bookDAO.index());
         return "book/index";
+    }
+
+    @GetMapping({"/new", "/new/"})
+    public String newBookCreate(@ModelAttribute("book") Book book) {
+        return "book/new";
+    }
+
+    @PostMapping()
+    public String save(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "book/new";
+        }
+
+        bookDAO.save(book);
+        return "redirect:book/";
     }
 }
