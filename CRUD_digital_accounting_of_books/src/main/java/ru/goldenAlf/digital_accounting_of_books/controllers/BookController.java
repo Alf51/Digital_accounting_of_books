@@ -30,7 +30,7 @@ public class BookController {
         return "book/new";
     }
 
-    @PostMapping()
+    @PostMapping
     public String save(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "book/new";
@@ -38,5 +38,12 @@ public class BookController {
 
         bookDAO.save(book);
         return "redirect:book/";
+    }
+
+    @GetMapping({"/{id}", "/{id}/"})
+    public String show(@PathVariable("id") int id, Model model) {
+        Book book = bookDAO.show(id).get();
+        model.addAttribute(book);
+        return "book/show";
     }
 }
