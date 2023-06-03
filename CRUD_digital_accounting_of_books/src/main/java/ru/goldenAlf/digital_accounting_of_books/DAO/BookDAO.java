@@ -40,8 +40,7 @@ public class BookDAO {
     }
 
     public void update(int id, Book bookUpdate) {
-        jdbcTemplate.query("UPDATE book SET name=?, author=?, year=?  WHERE id=?",
-                new BeanPropertyRowMapper<>(Book.class),
+        jdbcTemplate.update("UPDATE book SET name=?, author=?, year=?  WHERE id=?",
                 bookUpdate.getName(),
                 bookUpdate.getAuthor(),
                 bookUpdate.getYear(),

@@ -46,4 +46,27 @@ public class BookController {
         model.addAttribute(book);
         return "book/show";
     }
+
+    @GetMapping({"/{id}/edit/", "/{id}/edit"})
+    public String edit(@PathVariable("id") int id, Model model) {
+        if (bookDAO.show(id).isEmpty()) {
+            return "redirect:book/";
+        }
+
+        Book book = bookDAO.show(id).get();
+        model.addAttribute("book", book);
+        return "book/edit";
+    }
+
+    @PatchMapping("{id}")
+    public String update(@ModelAttribute("book") @Valid Book book,
+                         @PathVariable("id") int id,
+                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "book/edit";
+        }
+
+        bookDAO.update(id, book);
+        return "redirect:/book/";
+    }
 }

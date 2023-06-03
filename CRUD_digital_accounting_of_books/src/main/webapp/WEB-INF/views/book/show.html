@@ -5,16 +5,20 @@
     <title th:text="${book.name}">Книга</title>
 </head>
 <body>
-
-<p th:text="${book.name}" ></p>
-<p th:text="${book.author}" ></p>
-<p th:text="${book.year}" ></p>
-
-<br>
-<br>
 <a href="/book/">К каталогу книг</a>
 <br>
 <a href="/people/">Список пользователей</a>
-
+<br>
+<br>
+<p th:text="${book.name}"></p>
+<p th:text="${book.author}"></p>
+<p th:text="${book.year}"></p>
+<br>
+<a th:href="@{/book/{id}/edit/(id=${book.getId()})}">Редактировать</a>
+<br>
+<br>
+<form methods="DELETE" th:action="@{book/{id}(id=${book.getId()})}">
+    <input type="submit" value="удалить книгу">
+</form>
 </body>
 </html>
