@@ -52,4 +52,10 @@ public class BookDAO {
                 new BeanPropertyRowMapper<>(Book.class),
                 id);
     }
+
+    public void assignBook(int person_id, int book_id) {
+        jdbcTemplate.update("UPDATE book SET person_id=? WHERE id=?",
+                person_id, book_id);
+    }
+
 }

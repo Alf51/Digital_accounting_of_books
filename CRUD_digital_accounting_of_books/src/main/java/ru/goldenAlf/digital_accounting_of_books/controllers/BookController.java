@@ -7,16 +7,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.goldenAlf.digital_accounting_of_books.DAO.BookDAO;
+import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
 import ru.goldenAlf.digital_accounting_of_books.model.Book;
+import ru.goldenAlf.digital_accounting_of_books.model.Person;
 
 @Controller
 @RequestMapping("/book")
 public class BookController {
     private final BookDAO bookDAO;
+    private final PersonDAO personDAO;
 
     @Autowired
-    public BookController(BookDAO personDAO) {
-        this.bookDAO = personDAO;
+    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
+        this.bookDAO = bookDAO;
+        this.personDAO = personDAO;
     }
 
     @GetMapping({"/", ""})
@@ -41,9 +45,11 @@ public class BookController {
     }
 
     @GetMapping({"/{id}", "/{id}/"})
-    public String show(@PathVariable("id") int id, Model model) {
+    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
         Book book = bookDAO.show(id).orElse(new Book());
-        model.addAttribute(book);
+
+        model.addAttribute("book", book);
+        model.addAttribute("people", personDAO.index());
         return "book/show";
     }
 
@@ -67,6 +73,16 @@ public class BookController {
         }
 
         bookDAO.update(id, book);
+        return "redirect:/book/";
+    }
+
+    @PatchMapping("/add/{book_id}")
+    public String assignBook(@PathVariable("book_id") int book_id,
+                             @ModelAttribute("person") Person person) {
+        System.out.println("id книги = " + book_id);
+        System.out.println("id человека = " + person.getId());
+
+        bookDAO.assignBook(person.getId(), book_id);
         return "redirect:/book/";
     }
 

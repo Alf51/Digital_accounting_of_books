@@ -5,6 +5,17 @@
     <title th:text="${book.name}">Книга</title>
 </head>
 <body>
+
+<form th:method="PATCH" th:action="@{/book/add/{book_id}(book_id=${book.getId()})}" th:object="${person}">
+    <label for="person">Выбирете человека</label>
+    <select th:object="${person}" th:field="*{id}" id="person">
+        <option th:each="person : ${people}" th:value="${person.getId()}"
+                th:text="${person.getFullName()}"></option>
+    </select>
+
+    <input type="submit" value="Назначить админом"/>
+</form>
+
 <a href="/book/">К каталогу книг</a>
 <br>
 <a href="/people/">Список пользователей</a>
@@ -13,6 +24,8 @@
 <p th:text="${book.name}"></p>
 <p th:text="${book.author}"></p>
 <p th:text="${book.year}"></p>
+<br>
+
 <br>
 <a th:href="@{/book/{id}/edit/(id=${book.getId()})}">Редактировать</a>
 <br>

@@ -8,7 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.goldenAlf.digital_accounting_of_books.DAO.BookDAO;
 import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
-import ru.goldenAlf.digital_accounting_of_books.model.Book;
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
 
 @Controller
