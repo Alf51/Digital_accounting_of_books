@@ -8,8 +8,11 @@
 
 <p th:text="${person.getFullName()}"></p>
 <p th:text="${person.getBirthday()}"></p>
-
-<a href="/people">На главную страницу</a>
+<br>
+<br>
+<div th:each="book : ${books}">
+    <a th:text="${book.getName()}" th:href="@{/book/{id}(id=${book.getId()})}"></a>
+</div>
 <br>
 <br>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
@@ -18,5 +21,8 @@
 <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
     <input type="submit" value="удалить пользователя">
 </form>
+<br>
+<a href="/people">На главную страницу</a>
+<br>
 </body>
 </html>

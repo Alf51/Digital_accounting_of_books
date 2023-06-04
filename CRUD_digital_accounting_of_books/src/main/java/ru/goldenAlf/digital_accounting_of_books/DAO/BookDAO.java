@@ -46,4 +46,10 @@ public class BookDAO {
                 bookUpdate.getYear(),
                 id);
     }
+
+    public List<Book> showBooksTakenPerson(int id) {
+        return jdbcTemplate.query("SELECT * FROM book WHERE person_id=?",
+                new BeanPropertyRowMapper<>(Book.class),
+                id);
+    }
 }

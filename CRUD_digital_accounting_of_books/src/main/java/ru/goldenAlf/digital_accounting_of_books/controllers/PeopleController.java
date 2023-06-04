@@ -6,17 +6,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.goldenAlf.digital_accounting_of_books.DAO.BookDAO;
 import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
+import ru.goldenAlf.digital_accounting_of_books.model.Book;
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDAO personDAO;
+    private final BookDAO bookDAO;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO) {
+    public PeopleController(PersonDAO personDAO, BookDAO bookDAO) {
         this.personDAO = personDAO;
+        this.bookDAO = bookDAO;
     }
 
     @GetMapping({"/", ""})
@@ -39,6 +43,7 @@ public class PeopleController {
         //показать конкретного пользователя
         Person person = personDAO.show(id).get();
         model.addAttribute("person", person);
+        model.addAttribute("books", bookDAO.showBooksTakenPerson(id));
         return "people/show";
     }
 
