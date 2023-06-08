@@ -13,13 +13,19 @@
                 th:text="${person.getFullName()}"></option>
     </select>
 
-    <input type="submit" value="Назначить админом"/>
+    <input type="submit" value="Назначить книгу"/>
 </form>
 
 <a href="/book/">К каталогу книг</a>
 <br>
 <a href="/people/">Список пользователей</a>
 <br>
+<p>Владелец книги</p>
+<p th:text="${bookOwner.getFullName()}"></p>
+<form th:method="PATCH" th:action="@{/book/releaseBook/{id}(id=${book.getId()})}">
+    <input type="submit" value="освободить книгу">
+</form>
+
 <br>
 <p th:text="${book.name}"></p>
 <p th:text="${book.author}"></p>
@@ -29,6 +35,7 @@
 <br>
 <a th:href="@{/book/{id}/edit/(id=${book.getId()})}">Редактировать</a>
 <br>
+
 <br>
 <form th:method="DELETE" th:action="@{/book/{id}(id=${book.getId()})}">
     <input type="submit" value="удалить книгу">

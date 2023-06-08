@@ -5,6 +5,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import ru.goldenAlf.digital_accounting_of_books.model.Book;
+import ru.goldenAlf.digital_accounting_of_books.model.Person;
+import ru.goldenAlf.digital_accounting_of_books.utils.PersonMapper;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,9 +55,19 @@ public class BookDAO {
                 id);
     }
 
+    public Optional<Person> requestIdPersonWhoTookBook(int id_book) {
+        return jdbcTemplate.query("SELECT * from book join person on book.person_id = person.id where book.id=?",
+                new PersonMapper(),
+                id_book).stream().findAny();
+    }
+
+
     public void assignBook(int person_id, int book_id) {
         jdbcTemplate.update("UPDATE book SET person_id=? WHERE id=?",
                 person_id, book_id);
     }
 
+    public void releaseBook(int book_id) {
+        jdbcTemplate.update("UPDATE book SET person_id=null WHERE id=?", book_id);
+    }
 }
