@@ -6,26 +6,28 @@
 </head>
 <body>
 
+<div th:if="${bookOwner.getFullName() == null}">
 <form th:method="PATCH" th:action="@{/book/add/{book_id}(book_id=${book.getId()})}" th:object="${person}">
     <label for="person">Выбирете человека</label>
     <select th:object="${person}" th:field="*{id}" id="person">
         <option th:each="person : ${people}" th:value="${person.getId()}"
                 th:text="${person.getFullName()}"></option>
     </select>
-
     <input type="submit" value="Назначить книгу"/>
 </form>
+</div >
+
+<div th:unless="${bookOwner.getFullName() == null}">
+<p th:text="${'Владелец книги ' + bookOwner.getFullName()}"></p>
+<form th:method="PATCH" th:action="@{/book/releaseBook/{id}(id=${book.getId()})}">
+    <input type="submit" value="освободить книгу">
+</form>
+</div >
 
 <a href="/book/">К каталогу книг</a>
 <br>
 <a href="/people/">Список пользователей</a>
 <br>
-<p>Владелец книги</p>
-<p th:text="${bookOwner.getFullName()}"></p>
-<form th:method="PATCH" th:action="@{/book/releaseBook/{id}(id=${book.getId()})}">
-    <input type="submit" value="освободить книгу">
-</form>
-
 <br>
 <p th:text="${book.name}"></p>
 <p th:text="${book.author}"></p>

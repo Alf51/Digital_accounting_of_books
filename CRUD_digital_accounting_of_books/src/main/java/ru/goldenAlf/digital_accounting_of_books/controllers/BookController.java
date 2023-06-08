@@ -90,7 +90,7 @@ public class BookController {
     public String releaseBook(@PathVariable("book_id") int book_id, Model model) {
         bookDAO.releaseBook(book_id);
         model.addAttribute("book", bookDAO.show(book_id).orElse(new Book()));
-        return "redirect:/book/";
+        return "redirect:/book/"+book_id;
     }
 
     @DeleteMapping("{id}")
