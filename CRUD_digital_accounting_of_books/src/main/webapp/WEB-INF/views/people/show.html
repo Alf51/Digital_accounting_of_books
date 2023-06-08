@@ -10,9 +10,12 @@
 <p th:text="${person.getBirthday()}"></p>
 <br>
 <br>
-<div th:each="book : ${books}">
+
+<div th:unless="${books.isEmpty()}" th:each="book : ${books}">
     <a th:text="${book.getName()}" th:href="@{/book/{id}(id=${book.getId()})}"></a>
 </div>
+
+<p th:if="${books.isEmpty()}">Человек пока не взял не одной книги</p>
 <br>
 <br>
 <a th:href="@{/people/{id}/edit(id=${person.getId()})}" >редактировать</a>
