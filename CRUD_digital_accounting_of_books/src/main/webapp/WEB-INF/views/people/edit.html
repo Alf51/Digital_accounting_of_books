@@ -5,21 +5,21 @@
     <title>Редактирование пользователя </title>
 </head>
 <body>
+<a href="/people/">На главную страницу</a>
+<br>
 
 <form th:method="PATCH" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
-  <label for="fullName">введите новое имя</label>
+  <label for="fullName">Введите ФИО</label>
   <input type="text" th:field="*{fullName}" id="fullName"/>
   <div style="color:red" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Name error</div>
   <br/>
-  <label for="birthday">Введите новый возраст</label>
+  <label for="birthday">Введите возраст</label>
   <input type="text" th:field="*{birthday}" id="birthday"/>
   <div style="color:red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">Age error</div>
   <br/>
   <hr/>
-  <input type="submit" value="редактировать"/>
-
+  <input type="submit" value="Редактировать"/>
   <br>
-  <a href="/people/">На главную страницу</a>
 </form>
 
 </body>

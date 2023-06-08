@@ -61,6 +61,7 @@ public class PeopleController {
         if(personDAO.show(id).isEmpty()) {
             return "redirect:/people";
         }
+        System.out.println("================");
         Person person = personDAO.show(id).get();
         model.addAttribute("person", person);
         return "people/edit";
