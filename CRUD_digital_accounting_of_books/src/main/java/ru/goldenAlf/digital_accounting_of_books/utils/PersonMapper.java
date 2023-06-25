@@ -16,9 +16,9 @@ public class PersonMapper implements RowMapper<Person> {
         person.setId(resultSet.getInt("id"));
         person.setFullName(resultSet.getString("fullname"));
 
-        Date date = resultSet.getDate("birthday");
-        LocalDate localDateTime = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date));
-        person.setBirthday(localDateTime);
+//        Date date = resultSet.getDate("birthday");
+//        LocalDate localDateTime = LocalDate.parse(new SimpleDateFormat("yyyy-MM-dd").format(date));
+        person.setBirthday(resultSet.getString("birthday"));
         return person;
     }
 }

@@ -30,6 +30,12 @@ public class PersonDAO {
                 id).stream().findAny();
     }
 
+    public Optional<Person> show(String fullName) {
+        return jdbcTemplate.query("SELECT * FROM person WHERE fullname=?",
+                new PersonMapper(),
+                fullName).stream().findAny();
+    }
+
     public void save(Person person) {
         jdbcTemplate.update("INSERT INTO person(fullname, birthday) VALUES (?, ?)",
                 person.getFullName(),

@@ -9,17 +9,20 @@ import org.springframework.web.bind.annotation.*;
 import ru.goldenAlf.digital_accounting_of_books.DAO.BookDAO;
 import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
+import ru.goldenAlf.digital_accounting_of_books.utils.PersonValidator;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonDAO personDAO;
     private final BookDAO bookDAO;
+    private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, BookDAO bookDAO) {
+    public PeopleController(PersonDAO personDAO, BookDAO bookDAO, PersonValidator personValidator) {
         this.personDAO = personDAO;
         this.bookDAO = bookDAO;
+        this.personValidator = personValidator;
     }
 
     @GetMapping({"/", ""})
@@ -35,7 +38,7 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        if(personDAO.show(id).isEmpty()) {
+        if (personDAO.show(id).isEmpty()) {
             return "redirect:/people";
         }
 
@@ -48,6 +51,8 @@ public class PeopleController {
 
     @PostMapping
     public String save(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
+        personValidator.validate(person, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "people/new";
         }
@@ -58,7 +63,7 @@ public class PeopleController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        if(personDAO.show(id).isEmpty()) {
+        if (personDAO.show(id).isEmpty()) {
             return "redirect:/people";
         }
         System.out.println("================");
@@ -71,6 +76,9 @@ public class PeopleController {
     public String update(@ModelAttribute("person") @Valid Person person,
                          @PathVariable("id") int id,
                          BindingResult bindingResult) {
+
+        personValidator.validate(person, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "people/edit";
         }

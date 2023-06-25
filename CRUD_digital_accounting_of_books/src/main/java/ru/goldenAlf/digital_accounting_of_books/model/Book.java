@@ -11,9 +11,9 @@ public class Book {
     private String name;
 
     private String author;
-    //@DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate year;
 
+    // Конструктор по умолчанию нужен для Spring
     public Book() {
     }
 

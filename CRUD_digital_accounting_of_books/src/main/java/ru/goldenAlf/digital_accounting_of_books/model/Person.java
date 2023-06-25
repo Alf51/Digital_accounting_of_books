@@ -3,21 +3,20 @@ package ru.goldenAlf.digital_accounting_of_books.model;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
-import java.time.LocalDate;
-
 public class Person {
     private int id;
 
     @NotEmpty(message = "Полное имя не может быть пустым")
     @Pattern(regexp = "[А-Яа-я]*?\\s[А-Яа-я]*?\\s[А-Яа-я]*", message = "Напишите польностью ФИО")
     private String fullName;
-    //@DateTimeFormat(pattern = "\\d{4}-\\d{2}-\\d{2}")
-    private LocalDate birthday;
+    @Pattern(regexp = "(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\\d\\d", message = "Неправельный формат даты, введи дату dd.MM.yyyy")
+    private String birthday;
 
+    // Конструктор по умолчанию нужен для Spring
     public Person() {
     }
 
-    public Person(int id, String fullName, LocalDate birthday) {
+    public Person(int id, String fullName, String birthday) {
         this.id = id;
         this.fullName = fullName;
         this.birthday = birthday;
@@ -39,11 +38,11 @@ public class Person {
         this.fullName = fullName;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 }
