@@ -2,11 +2,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-CRUD_digital_accounting_of_books/src/main/resources/database.properties
-
+/src/main/resources/database.properties
+/.idea/*
 
 ### IntelliJ IDEA ###
-.idea/*
 *.iws
 *.iml
 *.ipr
