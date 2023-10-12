@@ -4,6 +4,8 @@ target/
 !**/src/test/**/target/
 /src/main/resources/database.properties
 /.idea/*
+/.idea
+.idea
 
 ### IntelliJ IDEA ###
 *.iws
