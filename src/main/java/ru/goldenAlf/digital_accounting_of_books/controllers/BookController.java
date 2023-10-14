@@ -25,8 +25,10 @@ public class BookController {
     }
 
     @GetMapping({"/", ""})
-    public String index(Model model) {
-        model.addAttribute("books", bookService.index());
+    public String index(Model model,
+                        @RequestParam(name = "page", required = false) String countPage,
+                        @RequestParam(name = "books_per_page", required = false) String countBooksPerPage) {
+        model.addAttribute("books", bookService.index(countPage, countBooksPerPage));
         return "book/index";
     }
 
@@ -91,7 +93,7 @@ public class BookController {
     public String releaseBook(@PathVariable("book_id") int book_id, Model model) {
         bookService.releaseBook(book_id);
         model.addAttribute("book", bookService.show(book_id).orElse(new Book()));
-        return "redirect:/book/"+book_id;
+        return "redirect:/book/" + book_id;
     }
 
     @DeleteMapping("{id}")
