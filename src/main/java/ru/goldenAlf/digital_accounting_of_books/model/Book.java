@@ -1,17 +1,31 @@
 package ru.goldenAlf.digital_accounting_of_books.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalDate;
 
+@Entity
+@Table(name = "book")
 public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @NotEmpty(message = "Название книги обязательно")
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "year")
     private LocalDate year;
+
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    private Person person;
 
     // Конструктор по умолчанию нужен для Spring
     public Book() {
@@ -55,4 +69,13 @@ public class Book {
     public void setYear(LocalDate year) {
         this.year = year;
     }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
 }

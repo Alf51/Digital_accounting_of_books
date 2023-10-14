@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
+
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
+import ru.goldenAlf.digital_accounting_of_books.services.PersonService;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,11 +14,11 @@ import java.time.format.DateTimeParseException;
 
 @Component
 public class PersonValidator implements Validator {
-    private final PersonDAO personDAO;
+    private final PersonService personService;
 
     @Autowired
-    public PersonValidator(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonValidator(PersonService personService) {
+        this.personService = personService;
     }
 
     @Override
@@ -37,8 +38,8 @@ public class PersonValidator implements Validator {
             errors.rejectValue("fullName", "", "Напишите польностью ФИО");
         }
 
-        if (personDAO.show(person.getFullName()).isPresent()) {
-            if (personDAO.show(person.getFullName()).get().getId() != person.getId()) {
+        if (personService.show(person.getFullName()).isPresent()) {
+            if (personService.show(person.getFullName()).get().getId() != person.getId()) {
                 errors.rejectValue("fullName", "", "Такой человек уже зарегистрирован");
             }
         }

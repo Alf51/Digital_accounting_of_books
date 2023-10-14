@@ -6,28 +6,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.goldenAlf.digital_accounting_of_books.DAO.BookDAO;
-import ru.goldenAlf.digital_accounting_of_books.DAO.PersonDAO;
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
+import ru.goldenAlf.digital_accounting_of_books.services.BookService;
+import ru.goldenAlf.digital_accounting_of_books.services.PersonService;
 import ru.goldenAlf.digital_accounting_of_books.utils.PersonValidator;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final PersonDAO personDAO;
-    private final BookDAO bookDAO;
+    private final PersonService personService;
+    private final BookService bookService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonDAO personDAO, BookDAO bookDAO, PersonValidator personValidator) {
-        this.personDAO = personDAO;
-        this.bookDAO = bookDAO;
+    public PeopleController(PersonService personService, BookService bookService, PersonValidator personValidator) {
+        this.personService = personService;
+        this.bookService = bookService;
         this.personValidator = personValidator;
     }
 
     @GetMapping({"/", ""})
     public String index(Model model) {
-        model.addAttribute("people", personDAO.index());
+        model.addAttribute("people", personService.index());
         return "people/index";
     }
 
@@ -38,14 +38,14 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        if (personDAO.show(id).isEmpty()) {
+        if (personService.show(id).isEmpty()) {
             return "redirect:/people";
         }
 
         //показать конкретного пользователя
-        Person person = personDAO.show(id).get();
+        Person person = personService.show(id).get();
         model.addAttribute("person", person);
-        model.addAttribute("books", bookDAO.showBooksTakenPerson(id));
+        model.addAttribute("books", bookService.showBooksTakenPerson(id));
         return "people/show";
     }
 
@@ -57,17 +57,17 @@ public class PeopleController {
             return "people/new";
         }
 
-        personDAO.save(person);
+        personService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") int id, Model model) {
-        if (personDAO.show(id).isEmpty()) {
+        if (personService.show(id).isEmpty()) {
             return "redirect:/people";
         }
         System.out.println("================");
-        Person person = personDAO.show(id).get();
+        Person person = personService.show(id).get();
         model.addAttribute("person", person);
         return "people/edit";
     }
@@ -83,13 +83,13 @@ public class PeopleController {
             return "people/edit";
         }
 
-        personDAO.update(id, person);
+        personService.update(id, person);
         return "redirect:/people/";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        personDAO.delete(id);
+        personService.delete(id);
         return "redirect:/people";
     }
 }
