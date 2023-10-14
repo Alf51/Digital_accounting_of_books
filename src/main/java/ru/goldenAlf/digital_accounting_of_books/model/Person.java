@@ -24,6 +24,7 @@ public class Person {
     @Column(name = "birthday")
     private String birthday;
 
+
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     private List<Book> bookList;
 
