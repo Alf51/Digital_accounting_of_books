@@ -10,6 +10,7 @@ import ru.goldenAlf.digital_accounting_of_books.model.Book;
 import ru.goldenAlf.digital_accounting_of_books.model.Person;
 import ru.goldenAlf.digital_accounting_of_books.repositories.BookRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -105,5 +106,12 @@ public class BookService {
         Person person = book.getPerson();
         person.getBookList().remove(book);
         book.setPerson(null);
+    }
+
+    public List<Book> findBookByStartWithName(String startingWith) {
+        if (startingWith == null) {
+            return null;
+        }
+        return startingWith.isEmpty() ? Collections.emptyList() : bookRepository.findByNameStartingWith(startingWith);
     }
 }

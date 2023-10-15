@@ -12,6 +12,8 @@ import ru.goldenAlf.digital_accounting_of_books.model.Person;
 import ru.goldenAlf.digital_accounting_of_books.services.BookService;
 import ru.goldenAlf.digital_accounting_of_books.services.PersonService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/book")
 public class BookController {
@@ -28,7 +30,7 @@ public class BookController {
     public String index(Model model,
                         @RequestParam(name = "page", required = false) String countPage,
                         @RequestParam(name = "books_per_page", required = false) String countBooksPerPage,
-                        @RequestParam(name = "sort_by_year", defaultValue = "false") String sortType ) {
+                        @RequestParam(name = "sort_by_year", defaultValue = "false") String sortType) {
         model.addAttribute("books", bookService.index(countPage, countBooksPerPage, sortType));
         return "book/index";
     }
@@ -101,5 +103,15 @@ public class BookController {
     public String delete(@PathVariable("id") int id) {
         bookService.delete(id);
         return "redirect:/book";
+    }
+
+    @GetMapping({"/search/", "/search"})
+    public String findBooks(@RequestParam(name = "keyword", required = false) String startingWith,
+                            Model model) {
+
+        List<Book> bookList = bookService.findBookByStartWithName(startingWith);
+        model.addAttribute("books", bookList);
+
+        return "/book/search";
     }
 }
