@@ -3,7 +3,11 @@ package ru.goldenAlf.digital_accounting_of_books.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "book")
@@ -23,9 +27,17 @@ public class Book {
     @Column(name = "year")
     private LocalDate year;
 
+    @Column(name = "date_of_issue")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfIssue;
+
+
     @ManyToOne
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
+
+    @Transient
+    private boolean isOverdue;
 
     // Конструктор по умолчанию нужен для Spring
     public Book() {
@@ -78,4 +90,22 @@ public class Book {
         this.person = person;
     }
 
+    public Date getDateOfIssue() {
+        return dateOfIssue;
+    }
+
+    public void setDateOfIssue(Date dateOfIssue) {
+        this.dateOfIssue = dateOfIssue;
+    }
+
+    public boolean isOverdue() {
+        if (this.dateOfIssue == null) {
+            return false;
+        }
+
+        long diffInMillies = new Date().getTime() - this.dateOfIssue.getTime();
+        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        return diff >= 10;
+    }
 }

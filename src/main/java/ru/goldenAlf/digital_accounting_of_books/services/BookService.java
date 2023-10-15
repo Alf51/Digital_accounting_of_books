@@ -11,6 +11,7 @@ import ru.goldenAlf.digital_accounting_of_books.model.Person;
 import ru.goldenAlf.digital_accounting_of_books.repositories.BookRepository;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,6 +98,7 @@ public class BookService {
         Person person = personService.show(person_id).get();
         Book book = bookRepository.findById(book_id).get();
         book.setPerson(person);
+        book.setDateOfIssue(new Date());
         person.addBookInList(book);
     }
 
@@ -106,6 +108,7 @@ public class BookService {
         Person person = book.getPerson();
         person.getBookList().remove(book);
         book.setPerson(null);
+        book.setDateOfIssue(null);
     }
 
     public List<Book> findBookByStartWithName(String startingWith) {
