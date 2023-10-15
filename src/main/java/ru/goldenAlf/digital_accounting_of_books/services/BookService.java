@@ -3,7 +3,7 @@ package ru.goldenAlf.digital_accounting_of_books.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.goldenAlf.digital_accounting_of_books.model.Book;
@@ -30,15 +30,29 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    //Возвращает определённое число книг на определённой странице
-    public List<Book> index(String page, String booksPerPage) {
+    public List<Book> index(Sort sort) {
+        return bookRepository.findAll(sort);
+    }
+
+    //Возвращает определённое число книг на определённой странице.
+    public List<Book> index(String page, String booksPerPage, String sortType) {
+        boolean isSort = false;
         try {
+            isSort = Boolean.parseBoolean(sortType);
             int countPage = Integer.parseInt(page);
             int countBooksPerPage = Integer.parseInt(booksPerPage);
-            return bookRepository.findAll(PageRequest.of(countPage, countBooksPerPage)).getContent();
+            return bookRepository.findAll(PageRequest.of(countPage,
+                            countBooksPerPage,
+                            getSortTypeByYear(isSort)))
+                    .getContent();
+
         } catch (NumberFormatException e) {
-            return index();
+            return index((getSortTypeByYear(isSort)));
         }
+    }
+
+    private static Sort getSortTypeByYear(boolean isSort) {
+        return isSort ? Sort.by("year") : Sort.unsorted();
     }
 
     public Optional<Book> show(int id) {
