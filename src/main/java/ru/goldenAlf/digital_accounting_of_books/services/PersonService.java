@@ -48,9 +48,7 @@ public class PersonService {
 
     @Transactional
     public void update(int id, Person personUpdate) {
-        Person person = personRepository.findById(id).get();
-        person.setFullName(personUpdate.getFullName());
-        person.setBirthday(person.getBirthday());
-        person.setBookList(personUpdate.getBookList());
+        personUpdate.setId(id);
+        personRepository.save(personUpdate);
     }
 }

@@ -26,6 +26,7 @@ public class BookController {
         this.personService = personService;
     }
 
+    //Страница со списком всех книг
     @GetMapping({"/", ""})
     public String index(Model model,
                         @RequestParam(name = "page", required = false) String countPage,
@@ -106,8 +107,13 @@ public class BookController {
     }
 
     @GetMapping({"/search/", "/search"})
-    public String findBooks(@RequestParam(name = "keyword", required = false) String startingWith,
-                            Model model) {
+    public String searchPag() {
+        return "/book/search";
+    }
+
+    @PostMapping({"/search/", "/search"})
+    public String makeSearch(@RequestParam(name = "keyword", required = false) String startingWith,
+                             Model model) {
 
         List<Book> bookList = bookService.findBookByStartWithName(startingWith);
         model.addAttribute("books", bookList);

@@ -31,11 +31,11 @@ public class PersonValidator implements Validator {
         Person person = (Person) target;
 
         if (!isValidDate(person.getBirthday())) {
-            errors.rejectValue("birthday", "", "Неправельный формат даты, введи дату dd.MM.yyyy");
+            errors.rejectValue("birthday", "", "Неправильный формат даты, введи дату dd.MM.yyyy");
         }
 
         if (!person.getFullName().matches("[А-Яа-я]*?\\s[А-Яа-я]*?\\s[А-Яа-я]*")) {
-            errors.rejectValue("fullName", "", "Напишите польностью ФИО");
+            errors.rejectValue("fullName", "", "Напишите полностью ФИО");
         }
 
         if (personService.show(person.getFullName()).isPresent()) {

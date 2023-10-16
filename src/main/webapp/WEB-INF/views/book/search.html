@@ -5,21 +5,19 @@
     <title>Поиск книги</title>
 </head>
 <body>
-<form th:method="GET" th:action="@{/book/search}">
+<form th:method="POST" th:action="@{/book/search}">
     <input type="text" name="keyword" th:value="${keyword}" placeholder="Введите поисковый запрос" size="50">
     <button type="submit">Искать</button>
     </div>
-    <div th:unless="${books == null}">
+    <div th:if="${books}">
         <div th:unless="${books.isEmpty()}">
             <div th:each="book : ${books}">
+                <a th:text="${book.getName() + ', ' + book.getYear()}"
+                   th:href="@{/book/{id}(id=${book.getId()})}"></a>
                 <div th:if="${book.getPerson() == null}">
-                    <a th:text="${book.getName() + ', ' + book.getYear()}"
-                       th:href="@{/book/{id}(id=${book.getId()})}"></a>
-                    <p>Книг свободна</p>
+                    <p>Книга свободна</p>
                 </div>
                 <div th:unless="${book.getPerson() == null}">
-                    <a th:text="${book.getName() + ', ' + book.getYear()}"
-                       th:href="@{/book/{id}(id=${book.getId()})}"></a>
                     <br>
                     <a th:text="${'Книга сейчас у ' + book.getPerson().getFullName()}"
                        th:href="@{/book/{id}(id=${book.getId()})}"></a>

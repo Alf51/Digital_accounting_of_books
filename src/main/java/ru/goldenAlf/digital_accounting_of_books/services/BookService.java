@@ -36,7 +36,7 @@ public class BookService {
         return bookRepository.findAll(sort);
     }
 
-    //Возвращает определённое число книг на определённой странице.
+    //Возвращает определённое число книг на определённой странице с учётом пагинации и сортировки.
     public List<Book> index(String page, String booksPerPage, String sortType) {
         boolean isSort = false;
         try {
@@ -74,10 +74,12 @@ public class BookService {
     @Transactional
     public void update(int id, Book bookUpdate) {
         Book book = bookRepository.findById(id).get();
-        book.setPerson(bookUpdate.getPerson());
-        book.setAuthor(bookUpdate.getAuthor());
-        book.setName(bookUpdate.getName());
-        book.setYear(bookUpdate.getYear());
+
+        // Добавляем книгу, котора не находиться в persistence context
+        bookUpdate.setPerson(book.getPerson()); //Чтобы не терялась связь при обновление
+        bookUpdate.setId(id);
+
+        bookRepository.save(bookUpdate);
     }
 
     //Показать книги, которые взял конкретный пользователь
@@ -112,9 +114,6 @@ public class BookService {
     }
 
     public List<Book> findBookByStartWithName(String startingWith) {
-        if (startingWith == null) {
-            return null;
-        }
         return startingWith.isEmpty() ? Collections.emptyList() : bookRepository.findByNameStartingWith(startingWith);
     }
 }
