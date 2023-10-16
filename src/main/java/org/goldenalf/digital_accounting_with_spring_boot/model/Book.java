@@ -2,6 +2,8 @@ package org.goldenalf.digital_accounting_with_spring_boot.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -9,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 
 @Entity
 @Table(name = "book")
+@Getter
+@Setter
 public class Book {
     @Id
     @Column(name = "id")
@@ -48,53 +52,6 @@ public class Book {
         this.year = year;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public LocalDate getYear() {
-        return year;
-    }
-
-    public void setYear(LocalDate year) {
-        this.year = year;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public Date getDateOfIssue() {
-        return dateOfIssue;
-    }
-
-    public void setDateOfIssue(Date dateOfIssue) {
-        this.dateOfIssue = dateOfIssue;
-    }
 
     public boolean isOverdue() {
         if (this.dateOfIssue == null) {
