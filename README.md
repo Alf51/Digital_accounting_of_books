@@ -29,7 +29,7 @@ gh repo clone git@github.com:Alf51/Digital_accounting_of_books
 
 4. Параметры для подключения БД пропишите в файле **resource** -> **database.properties**
 
-5. Для перехода на страницу пользователей используй в браузере **/people**
+5. Для перехода на страницу пользователей используй в браузере  **/people**
   
    Пример:
   
