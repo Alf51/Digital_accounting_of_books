@@ -80,6 +80,7 @@ public class PeopleController {
         personValidator.validate(person, bindingResult);
 
         if (bindingResult.hasErrors()) {
+            person.setId(id);
             return "people/edit";
         }
 
