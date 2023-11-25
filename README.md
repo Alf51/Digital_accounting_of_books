@@ -19,7 +19,7 @@
 
 1. Скачайте этот репозиторий к себе на компьютер
 ```
-gh repo clone git@github.com:Alf51/Digital_accounting_of_books
+git clone https://github.com/Alf51/Digital_accounting_of_books.git
 ```
 2. запустите веб-приложения используя версию:
 **tomcat 11**
