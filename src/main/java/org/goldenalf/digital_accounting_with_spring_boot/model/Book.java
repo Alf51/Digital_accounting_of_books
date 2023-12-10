@@ -2,6 +2,7 @@ package org.goldenalf.digital_accounting_with_spring_boot.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Table(name = "book")
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Book {
     @Id
     @Column(name = "id")
