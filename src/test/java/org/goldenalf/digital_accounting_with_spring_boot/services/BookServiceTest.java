@@ -35,7 +35,7 @@ class BookServiceTest {
 
         //then
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(2, result.size());
+        Assertions.assertEquals(books.size(), result.size());
         Assertions.assertEquals(books, result);
     }
 
